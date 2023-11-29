@@ -1,5 +1,5 @@
 import react from 'react';
-import Foto from '../../assets/logo_pizza.jpg'
+import Logo from '../../assets/logo_pizza.jpg'
 
 import {Container,LogoImage} from './styles.js'
 
@@ -9,8 +9,8 @@ const Header = ()=>{
     return(
         <>
         <Container>
-            <LogoImage src={Foto}/>
-            <SlideBar></SlideBar>
+            <LogoImage src={Logo}/>
+       
         </Container>
         
         </>
