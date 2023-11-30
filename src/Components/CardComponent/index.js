@@ -10,7 +10,7 @@ const CardComponent = ({img,title,price,plus})=>{
             <Container>
                 <CardPhoto src={img}></CardPhoto>
                 <Title>{title}</Title>
-                <Price> R$ {price}</Price>
+                <Price> R$ {parseFloat(price).toFixed(2)}</Price>
             </Container>
             <Plus onClick={plus}>+</Plus>
         </CardContainer>

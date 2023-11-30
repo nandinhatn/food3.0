@@ -8,6 +8,7 @@ import theme from './theme'
 import SlideBar from './Components/SlickBar/index.js';
 import ContainerInner from './Components/ContainerInner/index.js';
 import {ProductsContext,CategoriesContext} from './ContextProducts.js'
+import ScrollToTop from "react-scroll-to-top";
 import api from './assets/Dates/api.js'
 function App(props) {
    
@@ -22,7 +23,7 @@ function App(props) {
     
 
     <ThemeProvider theme={theme}>
-
+    <ScrollToTop smooth />
       <Container>
 
         <Header></Header>
