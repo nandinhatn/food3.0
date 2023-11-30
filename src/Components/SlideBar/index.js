@@ -12,18 +12,24 @@ const SlideBar = (props)=>{
 
     const [listCategories, setListCategories] = useState();
 
+    const [exib, setExib]= useState(false)
+
     const getCategories = ()=>{
         api.get('/api/categorias').then((res)=>{
-            console.log('aqui')
-            console.log(res.data.response)
+           
             setListCategories(res.data.response)
         })
     }
 
+    useEffect(()=>{
+        if(listCategories && listCategories.length>0){
+            setExib(true)
+        }
+    },[listCategories])
    
     useEffect(()=>{
         getCategories()
-        console.log(listCategories)
+       
     },[])
     const settings = {
         dots: false,
@@ -37,39 +43,23 @@ const SlideBar = (props)=>{
       };
     return(
         <>
+         {exib? 
+         
          <ContainerSliderStyle>
     
     <Carousel  {...settings}>
     
-    {listCategories? '' : ''}
-    {listCategories.map(element => 
+ 
+  {listCategories.map(element => 
          <div>
          <H3>{element.title}</H3>
        </div>
-    )}
-   
-         
-         
- 
-  
-  
-  
-  
-  
-  
- 
-  
-     
-   
-  
-  
-   
-    
-  
-  
+    )} 
     </Carousel>
   
-    </ContainerSliderStyle>
+    </ContainerSliderStyle> 
+         : 'nao pode exibir'}
+        
         </>
     )
 }

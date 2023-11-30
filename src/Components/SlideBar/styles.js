@@ -52,7 +52,7 @@ font-size: 12px;
 `;
 
 export const H3 = styled.div`
-font-size:14px;
+font-size:12px;
 margin-top:10px;
 margin-bottom: 10px;
 font-weight: bold;
