@@ -5,7 +5,7 @@ import Header from './Components/Header/index.js';
 import {Container} from './styles.js'
 import {ThemeProvider} from 'styled-components'
 import theme from './theme'
-import SlideBar from './Components/SlideBar/index.js';
+import SlideBar from './Components/SlickBar/index.js';
 import ContainerInner from './Components/ContainerInner/index.js';
 import {ProductsContext,CategoriesContext} from './ContextProducts.js'
 import api from './assets/Dates/api.js'
