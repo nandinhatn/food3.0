@@ -15,7 +15,7 @@ color: white;
 
 export const TagCategory = styled.div`
 background-color: ${(prop)=> prop.theme.colors.primary};
-padding: 5px;
+padding: 5px 5px 5px 10px;
 font-size: 14px;
 `;
 

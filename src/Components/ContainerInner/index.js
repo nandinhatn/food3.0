@@ -158,18 +158,7 @@ const ContainerInner = ()=>{
 
     }
     
-    const getCategories=()=>{
-    api.get('/api/categorias').then((res)=>{
-        console.log(res)
-        setListCategories(res.data.response)
-    })
-  }
-    const getProducts =()=>{
-    api.get('/api/produtos').then((res)=>{
-       console.log(res)
-       setListProducts(res.data.response)
-    })
-  }
+ 
    const markProductsSelf=()=>{
     setProductSelf(!productSelf)
     console.log('ativer', productSelf)
@@ -178,10 +167,7 @@ const ContainerInner = ()=>{
     }
     
    }
-    useEffect(()=>{
-     getCategories() 
-     getProducts()
-  },[])
+  
 
     useEffect(()=>{
         console.log(cart)

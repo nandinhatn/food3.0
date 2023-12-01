@@ -18,6 +18,7 @@ const SlideBar = (props)=>{
 
  
     useEffect(()=>{
+        console.log('exib categorie', listCategories)
         if(listCategories && listCategories.length>0){
             setExib(true)
         }

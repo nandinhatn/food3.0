@@ -10,7 +10,9 @@ import ContainerInner from './Components/ContainerInner/index.js';
 import {ProductsContext,CategoriesContext,CartContext} from './ContextProducts.js'
 import ScrollToTop from "react-scroll-to-top";
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Cart from './Components/Cart/index.js';
 import api from './assets/Dates/api.js'
+import LoaderApis from './Components/LoaderApis/index.js';
 function App(props) {
    
       const [listProducts,setListProducts] = useState([])
@@ -29,11 +31,14 @@ function App(props) {
     <ScrollToTop smooth />
       <Container>
 
-        <Header></Header>
-       <SlideBar></SlideBar>
        <BrowserRouter>
+        <Header></Header>
+        <LoaderApis/>
+
+       <SlideBar></SlideBar>
        <Routes>
         <Route  index path='/' element={<ContainerInner/>}/>
+        <Route path='/carrinho' element={<Cart/>} />
        </Routes>
        </BrowserRouter>
        {/* <ContainerInner>
