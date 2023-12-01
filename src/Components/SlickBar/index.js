@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext} from "react";
 import Slider from "react-slick";
+import { ProductsContext, CategoriesContext, Cart } from "../../ContextProducts";
 import { 
     Carousel,  
     ContainerSliderStyle, 
@@ -10,27 +11,19 @@ import api from "../../assets/Dates/api";
 
 const SlideBar = (props)=>{
 
-    const [listCategories, setListCategories] = useState();
+    const {listProducts, setListProducts} = useContext(ProductsContext)
+    const {listCategories, setListCategories} = useContext(CategoriesContext)
 
     const [exib, setExib]= useState(false)
 
-    const getCategories = ()=>{
-        api.get('/api/categorias').then((res)=>{
-           
-            setListCategories(res.data.response)
-        })
-    }
-
+ 
     useEffect(()=>{
         if(listCategories && listCategories.length>0){
             setExib(true)
         }
     },[listCategories])
    
-    useEffect(()=>{
-        getCategories()
-       
-    },[])
+  
     const settings = {
         dots: false,
         infinite: false,

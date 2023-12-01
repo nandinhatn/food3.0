@@ -31,7 +31,9 @@ const ModalWindow = ({
     markProductsSelf, 
     productsQtd,
     clickMinus,
-    clickPlus
+    clickPlus,
+    checkButtonAdd,
+    addCart,
 })=>{
    
     
@@ -94,7 +96,7 @@ const ModalWindow = ({
                 <ContainerDetailsText>Detalhes</ContainerDetailsText>
                 <div>{contentModal.details}</div>
             </ContainerDetails>
-            <ButtonCheckout disabled={productsQtd>0? false: true} >Colocar no Carrinho</ButtonCheckout>
+            <ButtonCheckout disabled={checkButtonAdd()} onClick={addCart}  >Colocar no Carrinho</ButtonCheckout>
         </ContainerModal>
 
     </Modal>
