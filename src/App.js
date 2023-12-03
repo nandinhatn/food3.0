@@ -7,7 +7,7 @@ import {ThemeProvider} from 'styled-components'
 import theme from './theme'
 import SlideBar from './Components/SlickBar/index.js';
 import ContainerInner from './Components/ContainerInner/index.js';
-import {ProductsContext,CategoriesContext,CartContext} from './ContextProducts.js'
+import {ProductsContext,CategoriesContext,CartContext, FreteContext} from './ContextProducts.js'
 import ScrollToTop from "react-scroll-to-top";
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Cart from './Components/Cart/index.js';
@@ -17,6 +17,7 @@ function App(props) {
    
       const [listProducts,setListProducts] = useState([])
       const [listCategories,setListCategories] = useState([])
+      const [frete, setFrete] = useState()
       const [cart,setCart] = useState([])
    
 
@@ -25,6 +26,8 @@ function App(props) {
     <ProductsContext.Provider value ={{listProducts, setListProducts}}>
       <CategoriesContext.Provider value={{listCategories, setListCategories}}>
       <CartContext.Provider value={{cart,setCart}}>
+      <FreteContext.Provider value={{frete,setFrete}}>
+
         
 
     <ThemeProvider theme={theme}>
@@ -43,9 +46,10 @@ function App(props) {
        </BrowserRouter>
        {/* <ContainerInner>
         
-       </ContainerInner> */}
+      </ContainerInner> */}
       </Container>
     </ThemeProvider>
+      </FreteContext.Provider>
       </CartContext.Provider>
     </CategoriesContext.Provider>
     </ProductsContext.Provider>

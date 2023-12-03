@@ -1,37 +1,58 @@
 import React,{useContext,useState, useEffect} from "react";
-import {CartContext,CategoriesContext,ProductsContext} from '../../ContextProducts'
+import {CartContext,CategoriesContext,ProductsContext, FreteContext} from '../../ContextProducts'
 import {
     ContainerCart,
     ItensCart,
     ItensCartTitle,
-    ContainerNoCart
+    ContainerNoCart,
+    Title
 } from './style'
 import {FaTrash} from 'react-icons/fa'
 import Icon from "@mdi/react";
 import {mdiCart} from '@mdi/js'
+import {getDistance} from 'geolib'
+import Maps from "../Maps";
 
 
 
 const Cart = ()=>{
 
         const {cart,setCart} = useContext(CartContext)
+        const {frete, setFrete} = useContext(FreteContext)
         const {listProducts, setListProducts} = useContext(ProductsContext)
         const {listCategories, setListCategories} = useContext(CategoriesContext)
+        const [confirm, setConfirm] = useState(false)
         let count=1;
 
         const priceTotal= (qtd, price, itemCart)=>{
             return parseFloat(qtd * parseFloat(price).toFixed(2))
 
         }
+        const calcTotal= ()=>{
+            
+            let sum = cart.reduce((c, v)=>{
+                    console.log(c,parseFloat(v.price))
+                    return c + (parseInt(v.qtd * parseFloat(v.price)))
+            },0)
+
+            return  (sum + frete).toFixed(2)
+
+        }
+
+        useEffect(()=>{
+            console.log(frete)
+        },[frete])
     return(
         <>
+        
+      <Title>Carrinho</Title>
         <ContainerCart>
             {cart.length>0?
             <>
             <ItensCartTitle>
              <div>Item</div>
         <div>Qtde</div>
-        <div>Prato</div>
+        <div>Item</div>
         <div>Preço</div>
         <div>Total</div>
              </ItensCartTitle>
@@ -48,8 +69,10 @@ const Cart = ()=>{
                     <div>{item.title}</div>
                     <div>R$ {parseFloat(item.price).toFixed(2)}</div>
                     <div>R$ {priceTotal(item.qtd, item.price, item).toFixed(2)}</div>
+                    
 
                 </ItensCart>
+             
                     </>
                 )
              })
@@ -60,8 +83,38 @@ const Cart = ()=>{
 
              </ContainerNoCart>
              }
+
+             {cart.length>0 ? 
+             
+             <>
+               {frete? <>
+                
+                <ItensCart>
+                    <div></div>
+                    <div></div>
+                    <div>Frete</div>
+                    <div></div>
+                    <div> R$ {frete.toFixed(2)}</div>
+                </ItensCart>
+                </> : ''}
+
+                <ItensCart>
+                    <div></div>
+                    <div></div>
+                    <div>Valor</div>
+                    <div></div>
+                    <div>R$ {calcTotal()}</div>
+                </ItensCart>
+
+             </> 
+             : ''}
           
-           
+          
+            <button onClick={()=> setConfirm(true)}>Confirma compra</button>
+            {confirm? 
+            <>
+              <Maps/>
+            </> : ''}
 
         </ContainerCart>
         </>

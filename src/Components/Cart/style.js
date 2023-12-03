@@ -57,3 +57,11 @@ color: ${(prop)=> prop.theme.colors.secondary};
 
 
 `;
+
+export const Title = styled.div`
+font-weight: bold;
+display: flex ;
+justify-content: center;
+margin-top: 20px;
+color: ${(prop)=> prop.theme.colors.primary};
+`;
