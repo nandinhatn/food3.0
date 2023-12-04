@@ -5,6 +5,7 @@ export const Container = styled.div`
 display: flex;
 justify-content: center;
 align-items: start;
+font-size: 14px;
 
 flex-wrap: wrap;
 `
@@ -28,7 +29,8 @@ border-bottom: 1px solid #CCC;
 height: 20px;
 font-family: ${(prop)=> prop.theme.fonts.regular};
 color: ${(prop)=> prop.theme.colors.secondary};
-
+margin-top: 20px;
+outline: 0;
 
 
 font-size: 12px;
@@ -58,7 +60,7 @@ border-radius: 16px;
 transition: 0.5s;
 margin-top: 20px;
 margin-bottom:20px;
-padding: 5px;
+padding: 10px;
 :hover{
     opacity: 0.9;
 }
@@ -84,6 +86,13 @@ font-size: 14px;
 font-weight: bold;
 font-family: ${(prop)=> prop.theme.fonts.regular};
 color: ${(prop)=> prop.theme.colors.secondary};
+`;
+export const Title = styled.div`
+font-weight: bold;
+display: flex ;
+justify-content: center;
+margin-top: 20px;
+color: ${(prop)=> prop.theme.colors.primary};
 `;
 
 

@@ -1,5 +1,13 @@
 import react,{useEffect, useState, useContext}  from 'react'
-import {CartContext, FreteContext, ProductsContext, CategoriesContext} from '../../ContextProducts'
+import {
+    CartContext, 
+    FreteContext, 
+    ProductsContext, 
+    CategoriesContext,
+   
+} from '../../ContextProducts'
+
+import {Input,Button,Container,Title} from './style'
 import { getDistance } from 'geolib'
 
 import Geocode from "react-geocode";
@@ -7,6 +15,7 @@ import infos from '../../assets/Dates/infos';
 import axios from 'axios';
 
 import { withMask } from 'use-mask-input';
+import apiKey from '../../assets/Dates/keys';
 
 
 
@@ -14,19 +23,22 @@ import { withMask } from 'use-mask-input';
 const Maps = ()=>{
 
     const [distance, setDistance] = useState([])
-    const [location, setLocation] = useState([])
+ 
     const [cep, setCep] = useState('04141100')
     const [cepConfirm, setCepConfirm] = useState(false)
-    const [street, setStreet] = useState()
-    const [bairro, setBairro] = useState()
-    const [localidade, setLocalidade] = useState()
+    const [address, setAddress] = useState()
+    const [neighborhood, setNeighborhood] = useState()
+    const [city, setCity] = useState()
     const [uf, setUF] = useState() 
-    const [complemento, setComplemento] = useState()
-    const [numero, setNumero] = useState()
+    const [complement, setComplement] = useState()
+    const [number, setNumber] = useState('')
     const [confirmAddres, setConfirmAddress] = useState(false)
-    
+ 
+   /*  const [lat, setLat] = useState();
+    const [long,setLong] = useState()   */  
     const {frete,setFrete} = useContext(FreteContext)
     const {cart,setCart} = useContext(CartContext)
+    const [txtAddress, setTxtAddress] = useState('')
     
 
     //6d3600f53d3a810a01e61276b18a238f58b135bb
@@ -49,22 +61,54 @@ const Maps = ()=>{
     
 
     const getPosition = ()=>{
-        let lat;
-        let long;
-        navigator.geolocation.getCurrentPosition((position) => {
-            lat = position.coords.latitude;
-            long = position.coords.longitude;
+        console.log('*************************************************aqui')
+        const key = apiKey
         
-             console.log(lat)
-             console.log(long)
-          /*   latText.innerText = lat.toFixed(2);
-        longText.innerText = long.toFixed(2); */
+     
+     let query= infos.cidade + txtAddress
+     
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${key}`).then((res)=>{
+            if(res){
+                console.log(res.data.results[0].address_components) 
+                console.log(res.data.results[0].address_components[0])// cep
+                console.log(res.data.results[0].address_components[1].long_name)// rua
+                console.log(res.data.results[0].address_components[2].long_name)// bairro
+                console.log(res.data.results[0].address_components[3].long_name)// cidade
+                console.log(res.data.results[0].address_components[4].long_name)// estado 
+                console.log(res.data.results[0].formatted_address)// endereço formatado
+                setAddress(res.data.results[0].formatted_address)
+                console.log(res.data.results[0].geometry.location.lat)// lat
+                console.log(res.data.results[0].geometry.location.lng)// lat */
+    
+               
+                let lat = res.data.results[0].geometry.location.lat
+                let long = res.data.results[0].geometry.location.lng 
+    
+                setAddress(res.data.results[0].formatted_address) 
+             
+                getDistanceBettwenn(lat,long) 
+                console.log(res.data.results)
+            }
+            
+           
+        }).catch((e)=>{
+            console.log(e)
+        })
+       
+       
+       
+   
 
+        
+    }
+    function getDistanceBettwenn(lat,long){
+        console.log(lat,long)
         const distance = getDistance(
             { latitude: lat, longitude: long },
             { latitude: -24.3173, longitude: -46.9956 }
            
         )
+        console.log('lat',lat,long)
         console.log(distance)
         let distanceKm = distance/1000
         if(distanceKm<= infos.limit_entrega){
@@ -73,14 +117,14 @@ const Maps = ()=>{
             const filter = infos.faixas.filter((el)=> el.distance <= distanceKm)
             console.log('infos',filter[0])
             setFrete(filter[0].value)
+            setConfirmAddress(true)
         }
         else{
             console.log('não permitido')
         }
-          });
-
-        
     }
+
+
 
     const clearForm=()=>{
         setBairro('')
@@ -89,7 +133,7 @@ const Maps = ()=>{
         setStreet('')
         setLocalidade('')
     }
-
+/* 
     const getAddress= ()=>{
         let newcep =cep.replaceAll(' ', '').replaceAll('_','').replaceAll('-', '')
         console.log('chamei', newcep, newcep.length)
@@ -117,55 +161,68 @@ const Maps = ()=>{
         
        
 
-    }
+    } */
 
-    const configCep= (value)=>{
+/*     const configCep= (value)=>{
         console.log('teste')
         setCep(value)
         getAddress()
-        setBairro()
-        setLocalidade()
-        setStreet()
+      
 
 
-    }
+    } */
+  
     
     useEffect(()=>{
-        getAddress()
-        if(cep.length<8){
+     /*    getAddress() */
+    /*     if(cep.length<8){
             clearForm()
-        }
+        } */
     },[cep])
 
     useEffect(()=>{
-     getPosition() 
+  
       
     },[])
     return(
         <>
-        <div> Endereço</div>
-        <div>CEP</div>
-        <input ref={withMask('99999-999')} onChange={(e)=> setCep(e.target.value) }></input>
+        <Container></Container>
+        <Title> Informações de  Endereço</Title>
+       {/*  <div> Digite seu CEP </div>
+        <input ref={withMask('99999-999')} onChange={(e)=> setCep(e.target.value) }></input> */}
+       
+        <Input value={txtAddress} onChange={(e)=> setTxtAddress(e.target.value)} placeholder='Digite seu endereço'></Input>
+        <Button  onClick={()=> getPosition()}>Confirma Endereco</Button>
+        
 
-        {cepConfirm? 
-        <>
-        <input value={street} placeholder='Rua'></input>
-        <input value={bairro} placeholder='Bairro'></input>
-        <input value={localidade} placeholder='Localidade'></input>
-        <input value={uf} placeholder='UF'></input>
-        <input placeholder='Informe o numero'></input>
-        <input placeholder='complemento'></input>
-        </> : ''}
+       
 
-            <button onClick={()=> setConfirmAddress(true)}>Confirmar Endereço</button>
+            
 
             {confirmAddres? 
+
             <>
-            <div>Confirmar Pagamento</div>
+            <div>Informe o numero</div>
+
+            <Input value={number} onChange={(e)=> setNumber(e.target.value)}></Input>
+            <div>Informe o Complemento</div>
+            <Input value={complement} onChange={(e)=> setComplement(e.target.value)}></Input>
+            {confirmAddres && number !='' ? 
+            <>
+            <Title>Endereço de Entrega</Title>
+            <Container>
+
+            <div>{address}</div>
+            </Container>
+            <div>Forma de Pagamento</div>
+            <div> aqui entra as informaçãoes de pagamento</div>
+            </>
+             :''}
+            
 
             </>
             : ''}
         </>
     )
 }
-export default Maps
+export default Maps;

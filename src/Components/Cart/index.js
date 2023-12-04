@@ -87,32 +87,45 @@ const Cart = ()=>{
              {cart.length>0 ? 
              
              <>
-               {frete? <>
+               {frete!='undefined' && frete? <>
                 
                 <ItensCart>
                     <div></div>
                     <div></div>
                     <div>Frete</div>
                     <div></div>
-                    <div> R$ {frete.toFixed(2)}</div>
+                    <div> {frete.toFixed(2)!='NaN' || frete.toFixed(2)> 0 ? 
+                    <>
+                    R$
+                    {frete.toFixed(2)}
+                    </>
+                    :''}</div>
                 </ItensCart>
                 </> : ''}
 
+              
                 <ItensCart>
                     <div></div>
                     <div></div>
-                    <div>Valor</div>
+                    <div>{frete? 'Valor  Total': ''}</div>
                     <div></div>
-                    <div>R$ {calcTotal()}</div>
+                    <div> {calcTotal()!='NaN'? 
+                    <>
+                    R$
+                    {calcTotal()}
+                    </>
+                    :''}</div>
                 </ItensCart>
-
+                {!confirm ? <button onClick={()=> setConfirm(true)}>Prosseguir para pagamento</button>: ''}
+                
              </> 
              : ''}
           
           
-            <button onClick={()=> setConfirm(true)}>Confirma compra</button>
+          
             {confirm? 
             <>
+            
               <Maps/>
             </> : ''}
 

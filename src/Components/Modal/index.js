@@ -96,7 +96,7 @@ const ModalWindow = ({
                 <ContainerDetailsText>Detalhes</ContainerDetailsText>
                 <div>{contentModal.details}</div>
             </ContainerDetails>
-            <ButtonCheckout disabled={checkButtonAdd()} onClick={addCart}  >Colocar no Carrinho</ButtonCheckout>
+            <ButtonCheckout disabled={checkButtonAdd()}  onClick={addCart} >Colocar no Carrinho</ButtonCheckout>
         </ContainerModal>
 
     </Modal>

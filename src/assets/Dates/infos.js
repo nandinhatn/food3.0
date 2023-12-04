@@ -4,6 +4,7 @@ const infos={
     latitude: '-24.333151304877862',
     longitude: '-47.00243278864841',
     limit_entrega: 20,
+    cidade: 'Peruibe',
     faixas : [
         {
             distance: 1,
