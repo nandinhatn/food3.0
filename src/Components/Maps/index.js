@@ -34,30 +34,12 @@ const Maps = ()=>{
     const [number, setNumber] = useState('')
     const [confirmAddres, setConfirmAddress] = useState(false)
  
-   /*  const [lat, setLat] = useState();
-    const [long,setLong] = useState()   */  
+   
     const {frete,setFrete} = useContext(FreteContext)
     const {cart,setCart} = useContext(CartContext)
     const [txtAddress, setTxtAddress] = useState('')
     
 
-    //6d3600f53d3a810a01e61276b18a238f58b135bb
-   /*  const teste = ()=>{
-        console.log('aqui222')
-        const successCallback = (position) => {
-            console.log(position);
-            let lat = position.coords.latitude;
-            let long = position.coords.longitude;
-            console.log(lat,long)
-          };
-          
-          const errorCallback = (error) => {
-            console.log(error);
-            console.log('as permissões de localização devem ser autorizadas')
-          };
-          
-          navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
-    } */
     
 
     const getPosition = ()=>{
@@ -133,57 +115,9 @@ const Maps = ()=>{
         setStreet('')
         setLocalidade('')
     }
-/* 
-    const getAddress= ()=>{
-        let newcep =cep.replaceAll(' ', '').replaceAll('_','').replaceAll('-', '')
-        console.log('chamei', newcep, newcep.length)
-      if(newcep.length>=8){
 
-            axios.get(`https://viacep.com.br/ws/${newcep}/json/`).then((res)=>{
-                console.log(res)
-                if(res.statusText=='OK'){
-                    setCepConfirm(true)
-                    setStreet(res.data.logradouro)
-                    setBairro(res.data.bairro)
-                    setLocalidade(res.data.localidade)
-                    setUF(res.data.uf)
-                    
-                }
-                if(res.data.error==true){
-                    console.log('erroooooooooooooooo')
-                }
-            })
-        }
-        else{
-           clearForm()
-        }
-       
-        
-       
-
-    } */
-
-/*     const configCep= (value)=>{
-        console.log('teste')
-        setCep(value)
-        getAddress()
-      
-
-
-    } */
-  
     
-    useEffect(()=>{
-     /*    getAddress() */
-    /*     if(cep.length<8){
-            clearForm()
-        } */
-    },[cep])
 
-    useEffect(()=>{
-  
-      
-    },[])
     return(
         <>
         <Container></Container>
