@@ -65,3 +65,17 @@ justify-content: center;
 margin-top: 20px;
 color: ${(prop)=> prop.theme.colors.primary};
 `;
+
+export const Button = styled.button`
+border:0;
+background: ${(props)=> props.theme.colors.primary};
+color: white;
+border-radius: 16px;
+transition: 0.5s;
+margin-top: 20px;
+margin-bottom:20px;
+padding: 10px;
+:hover{
+    opacity: 0.9;
+}
+`;

@@ -31,6 +31,7 @@ font-family: ${(prop)=> prop.theme.fonts.regular};
 color: ${(prop)=> prop.theme.colors.secondary};
 margin-top: 20px;
 outline: 0;
+width: 40%;
 
 
 font-size: 12px;

@@ -60,6 +60,7 @@ const ContainerInner = ()=>{
         const itemIsCart = hasItemCart.length>0 ? true: false
         const hasNotItemCartOff = hasNotItemCart.length>0? true : false
         
+        //set marker 1/2 products
 
         if(item.self){
 
@@ -74,7 +75,12 @@ const ContainerInner = ()=>{
                     let valorMax = Math.max(parseInt(item.price), parseInt(filter[0].price))
                     console.log(valorMax)
                     item.marker =true;
-                    filter[0].marker=true;
+                    filter[0].marker= true;
+
+                    
+                    filter[0].price= valorMax/2
+                    item.qtd=1
+                    filter[0].qtd=1
                     item.price = valorMax/2
                     item.title = item.title + ' 1/2 pizza'
                     setCart([item, filter[0]])

@@ -1,11 +1,17 @@
 import React,{useContext,useState, useEffect} from "react";
-import {CartContext,CategoriesContext,ProductsContext, FreteContext} from '../../ContextProducts'
+import {
+    CartContext,
+    CategoriesContext,
+    ProductsContext, 
+    FreteContext
+} from '../../ContextProducts'
 import {
     ContainerCart,
     ItensCart,
     ItensCartTitle,
     ContainerNoCart,
-    Title
+    Title,
+    Button
 } from './style'
 import {FaTrash} from 'react-icons/fa'
 import Icon from "@mdi/react";
@@ -22,6 +28,7 @@ const Cart = ()=>{
         const {listProducts, setListProducts} = useContext(ProductsContext)
         const {listCategories, setListCategories} = useContext(CategoriesContext)
         const [confirm, setConfirm] = useState(false)
+        const [cartOk, setCartOk] = useState(false)
         let count=1;
 
         const priceTotal= (qtd, price, itemCart)=>{
@@ -39,9 +46,26 @@ const Cart = ()=>{
 
         }
 
+        const checkItensOnlySelf= () =>{
+            if(cart.length>0){
+                let filterMarker = cart.filter((el)=> el.self==true && el.marker==false)
+                
+                if(filterMarker.length<=0){
+                    setCartOk(true)
+                }
+                
+            }
+        }
+
         useEffect(()=>{
             console.log(frete)
         },[frete])
+
+        useEffect(()=>{
+            checkItensOnlySelf()
+            //check if ha no carrinho items com self and marker false? se true - não pode fechar a compra
+
+        },[])
     return(
         <>
         
@@ -65,7 +89,7 @@ const Cart = ()=>{
                     <>
                 <ItensCart>
                     <div>{count++}</div>
-                    <div>{item.qtd}</div>
+                    <div> {item.self==true? '1/2' : item.qtd}</div>
                     <div>{item.title}</div>
                     <div>R$ {parseFloat(item.price).toFixed(2)}</div>
                     <div>R$ {priceTotal(item.qtd, item.price, item).toFixed(2)}</div>
@@ -116,7 +140,14 @@ const Cart = ()=>{
                     </>
                     :''}</div>
                 </ItensCart>
-                {!confirm ? <button onClick={()=> setConfirm(true)}>Prosseguir para pagamento</button>: ''}
+                {cartOk ? <>
+                    
+                    {!confirm?  <Button onClick={()=> setConfirm(true)}>Prosseguir para informações de endereço</Button> : ''}
+                   
+
+                </> : 
+                'Há porções a serem completadas'}
+               
                 
              </> 
              : ''}
