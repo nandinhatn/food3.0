@@ -27,6 +27,9 @@ const countItens= ()=>{
         console.log(sum)
         setCountItem(sum)
     }
+    else{
+        setCountItem(0)
+    }
 
 }
  useEffect(()=>{

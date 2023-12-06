@@ -57,6 +57,22 @@ const Cart = ()=>{
             }
         }
 
+        const deleteProduct = (id)=>{
+            console.log(id)
+            let filterCart = cart.filter((el)=> el.id !=id)
+            console.log(filterCart)
+           if(filterCart.length>0){
+                setCart([...filterCart])
+                console.log(cart)
+            }
+            else{
+                setCart([])
+                console.log(cart)
+            } 
+           
+            
+        }
+
         useEffect(()=>{
             console.log(frete)
         },[frete])
@@ -79,6 +95,7 @@ const Cart = ()=>{
         <div>Item</div>
         <div>Preço</div>
         <div>Total</div>
+        <div></div>
              </ItensCartTitle>
             </>
              : ''}
@@ -93,6 +110,7 @@ const Cart = ()=>{
                     <div>{item.title}</div>
                     <div>R$ {parseFloat(item.price).toFixed(2)}</div>
                     <div>R$ {priceTotal(item.qtd, item.price, item).toFixed(2)}</div>
+                    <div onClick={()=> deleteProduct(item.id)}><FaTrash size={15} color="red"/></div>
                     
 
                 </ItensCart>
