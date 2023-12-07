@@ -74,6 +74,7 @@ border-radius: 16px;
 transition: 0.5s;
 margin-top: 20px;
 margin-bottom:20px;
+cursor: pointer;
 padding: 10px;
 :hover{
     opacity: 0.9;

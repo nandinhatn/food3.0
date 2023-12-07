@@ -62,6 +62,7 @@ transition: 0.5s;
 margin-top: 20px;
 margin-bottom:20px;
 padding: 10px;
+cursor: pointer;
 :hover{
     opacity: 0.9;
 }
@@ -94,6 +95,11 @@ display: flex ;
 justify-content: center;
 margin-top: 20px;
 color: ${(prop)=> prop.theme.colors.primary};
+`;
+
+export const ContainerButtons = styled.div`
+display: flex;
+gap: 20px;
 `;
 
 

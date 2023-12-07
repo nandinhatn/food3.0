@@ -203,7 +203,7 @@ const Cart = ()=>{
             {confirm? 
             <>
             
-              <Maps/>
+              <Maps confirm={()=> setConfirm(false)}/>
             </> : ''}
 
         </ContainerCart>

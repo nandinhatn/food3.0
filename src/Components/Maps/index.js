@@ -7,7 +7,13 @@ import {
    
 } from '../../ContextProducts'
 
-import {Input,Button,Container,Title} from './style'
+import {
+    Input,
+    Button,
+    Container,
+    Title,
+    ContainerButtons
+} from './style'
 import { getDistance } from 'geolib'
 
 import Geocode from "react-geocode";
@@ -20,7 +26,7 @@ import apiKey from '../../assets/Dates/keys';
 
 
 
-const Maps = ()=>{
+const Maps = ({confirm})=>{
 
     const [distance, setDistance] = useState([])
  
@@ -126,7 +132,11 @@ const Maps = ()=>{
         <input ref={withMask('99999-999')} onChange={(e)=> setCep(e.target.value) }></input> */}
        
         <Input value={txtAddress} onChange={(e)=> setTxtAddress(e.target.value)} placeholder='Digite seu endereço'></Input>
-        <Button  onClick={()=> getPosition()}>Confirma Endereco</Button>
+        <ContainerButtons>
+
+        <Button  onClick={confirm}>Adicionar mais itens</Button>
+        <Button  onClick={()=> getPosition()}>Confirma Endereço</Button>
+        </ContainerButtons>
         
 
        
