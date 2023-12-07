@@ -126,8 +126,9 @@ font-size: 16px;
 export const ButtonCheckout = styled.button`
 border-radius: 16px;
 border: none;
-padding:10px;
-width: 100%;
+padding:10px 20px 10px 20px;
+
+
 color: white;
 font-weight:bold;
 font-size: 14px;

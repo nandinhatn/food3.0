@@ -1,5 +1,6 @@
 import React,{useContext, useEffect, useState}from "react";
 import {ProductsContext,CategoriesContext,CartContext} from '../../ContextProducts'
+import {NavLink, useLocation, redirect, useNavigate} from 'react-router-dom'
 
 import ModalWindow from "../Modal";
 import {
@@ -23,7 +24,7 @@ const ContainerInner = ()=>{
     const [productSelf, setProductSelf] = useState(false)
     const [productQtd, setProductQtd] = useState(0)
     const [modalAction, setModalAction] = useState(0)
-
+    const navigate = useNavigate()
 
 //ModalAction
 //0 - content initial
@@ -154,6 +155,7 @@ const ContainerInner = ()=>{
         document.body.style.overflow = 'auto'
         setProductQtd(0)
         setProductSelf(false)
+        setModalAction(0)
     }
     
     const checkButtonAdd=()=>{
@@ -179,6 +181,11 @@ const ContainerInner = ()=>{
     }
     
    }
+
+   const goToCart=()=>{
+        navigate('/carrinho')
+
+   }
   
 
     useEffect(()=>{
@@ -201,6 +208,7 @@ const ContainerInner = ()=>{
             clickPlus={()=> onClickPlus()}
             addCart={()=> addCart(modalContent)}
             modalAction= {modalAction}
+            goToCart={()=> goToCart()}
             />
 
             {listCategories.length>0 ? 

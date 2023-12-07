@@ -35,7 +35,8 @@ const ModalWindow = ({
     clickPlus,
     checkButtonAdd,
     addCart,
-    modalAction
+    modalAction,
+    goToCart
     
 })=>{
    
@@ -50,8 +51,8 @@ const ModalWindow = ({
              top: '0',
              bottom: '0',
              margin: 'auto',
-             width:'350px',
-             height:  '500px' ,
+             width:  modalAction===0? '350px' : '400px',
+             height:  modalAction===0? '500px' : '200px' ,
              zIndex:'90000000',
             
              boxShadow:'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
@@ -107,7 +108,12 @@ const ModalWindow = ({
        </>
         :<>
        <ContainerModal>
-        Adicionado com sucesso
+        <Title>Adicionado com sucesso</Title>
+        <ContainerShop>
+            <ButtonCheckout onClick={closeModal}> Continuar Comprando</ButtonCheckout>
+            <ButtonCheckout onClick={goToCart}> Ir para Carrinho</ButtonCheckout>
+        </ContainerShop>
+
        </ContainerModal>
        </>
        
