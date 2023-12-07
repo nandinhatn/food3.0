@@ -22,6 +22,12 @@ const ContainerInner = ()=>{
     const [modalContent, setModalContent] = useState([])
     const [productSelf, setProductSelf] = useState(false)
     const [productQtd, setProductQtd] = useState(0)
+    const [modalAction, setModalAction] = useState(0)
+
+
+//ModalAction
+//0 - content initial
+//1- after add cart
    
     const filterProducts = (category)=>{
         let productsFilter = listProducts.filter((el)=> el.id_categoria===category)
@@ -120,7 +126,7 @@ const ContainerInner = ()=>{
        
            
           
-     
+     setModalAction(1)
         
             
     }
@@ -194,6 +200,7 @@ const ContainerInner = ()=>{
             clickMinus={()=> onClickMinus()}
             clickPlus={()=> onClickPlus()}
             addCart={()=> addCart(modalContent)}
+            modalAction= {modalAction}
             />
 
             {listCategories.length>0 ? 

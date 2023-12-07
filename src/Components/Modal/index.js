@@ -1,5 +1,6 @@
-import react from 'react';
+import react,{useState, useEffect, useContext} from 'react';
 import Modal, { contextType } from 'react-modal'
+import { NavLink, useLocation, redirect, useNavigate } from 'react-router-dom';
 import {
     Button,
     ButtonCheckout,
@@ -34,11 +35,13 @@ const ModalWindow = ({
     clickPlus,
     checkButtonAdd,
     addCart,
+    modalAction
+    
 })=>{
    
     
     return(<>
-    
+
     <Modal isOpen={open} onRequestClose={closeModal} 
     style={{
         content:{
@@ -62,7 +65,9 @@ const ModalWindow = ({
           
              <Button onClick={closeModal}>X</Button>
         </ContainerButton>
-        <ContainerModal>
+       {modalAction===0 ?
+       <>
+          <ContainerModal>
             <Title>{contentModal.title}</Title>
             <Image src={contentModal.img}/>
             {contentModal.allowSelf? 
@@ -99,6 +104,15 @@ const ModalWindow = ({
             <ButtonCheckout disabled={checkButtonAdd()}  onClick={addCart} >Colocar no Carrinho</ButtonCheckout>
         </ContainerModal>
 
+       </>
+        :<>
+       <ContainerModal>
+        Adicionado com sucesso
+       </ContainerModal>
+       </>
+       
+       }
+     
     </Modal>
     </>)
 }
