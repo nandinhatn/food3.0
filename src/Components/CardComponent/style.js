@@ -6,7 +6,7 @@ border-radius: 0 0 20px  0px;
 background-color: white;
 filter: drop-shadow(7px 5px 10px #B3B3B3);
 
-width: 120px;
+width: 150px;
 
 gap: 10px;
 margin-bottom: 10px;

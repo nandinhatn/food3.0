@@ -46,30 +46,67 @@ const Cart = ()=>{
 
         }
 
+        const checkPriceProducts=(id)=>{
+            let product = listProducts.filter((el)=> el.id==id)
+            return product[0].price
+
+        }
+      
+
+        
+
         const checkItensOnlySelf= () =>{
             if(cart.length>0){
                 let filterMarker = cart.filter((el)=> el.self==true && el.marker==false)
+                let filterMarkerTrue = cart.filter((el)=> el.self==true && el.marker==true)
+                console.log(cart)
+               
                 
+
                 if(filterMarker.length<=0){
                     setCartOk(true)
                 }
                 
+                
+               
+                
             }
         }
+
+      
 
         const deleteProduct = (id)=>{
             console.log(id)
             let filterCart = cart.filter((el)=> el.id !=id)
+           
             console.log(filterCart)
            if(filterCart.length>0){
+
+            let filterMarker =filterCart.filter((el)=> el.self && el.marker==true && el.id !=id)
+            if(filterMarker.length>0){
+                console.log('tem item')
+                if(filterMarker.length%2==1){
+                    console.log('estamos aqui')
+                    filterMarker[0].marker=false
+                    filterMarker[0].price= checkPriceProducts(id)
+                    
+                    console.log(filterMarker)
+                    setCartOk(false)
+                }
+            }               
+               
                 setCart([...filterCart])
                 console.log(cart)
+
+                
+               
+                checkItensOnlySelf()
             }
             else{
                 setCart([])
                 console.log(cart)
+                checkItensOnlySelf()
             } 
-           
             
         }
 
