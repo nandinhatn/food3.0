@@ -213,7 +213,7 @@ const ContainerInner = ()=>{
                     return(
                     <>
                     <CardComponent title={el.title} price={el.price} img={el.img} plus={()=>openModal(el)}/>
-                     {/*    <div>{el.title}</div> */}
+              
                         
                     </>
                     )
