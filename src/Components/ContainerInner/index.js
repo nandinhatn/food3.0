@@ -1,5 +1,10 @@
 import React,{useContext, useEffect, useState}from "react";
-import {ProductsContext,CategoriesContext,CartContext} from '../../ContextProducts'
+import {
+    ProductsContext,
+    CategoriesContext,
+    CartContext,
+    SelectCategoryContext
+} from '../../ContextProducts'
 import {NavLink, useLocation, redirect, useNavigate} from 'react-router-dom'
 
 import ModalWindow from "../Modal";
@@ -19,6 +24,8 @@ const ContainerInner = ()=>{
     const {listProducts,setListProducts} = useContext(ProductsContext);
     const {listCategories, setListCategories} = useContext(CategoriesContext)
     const {cart, setCart} = useContext(CartContext)
+    const {selectCategory, setSelectCategory} = useContext(SelectCategoryContext)
+    const {listCategoriesState, setCategoriesState} = useState()
     const [modalIsOpen, setIsOpen] = useState(false)
     const [modalContent, setModalContent] = useState([])
     const [productSelf, setProductSelf] = useState(false)
@@ -31,7 +38,7 @@ const ContainerInner = ()=>{
 //1- after add cart
    
     const filterProducts = (category)=>{
-        let productsFilter = listProducts.filter((el)=> el.id_categoria===category)
+        let productsFilter = listProducts.filter((el)=> el.categoria===category)
       
         return productsFilter
     }
@@ -186,11 +193,25 @@ const ContainerInner = ()=>{
         navigate('/carrinho')
 
    }
+
+   const filterCategories =(id)=>{
+      let result = listCategories.filter((el)=> el.id==id)
+      return result
+   }
   
 
-    useEffect(()=>{
-        console.log(cart)
-    },[cart])
+  useEffect(()=>{
+        if(selectCategory.search===true){
+            setCategoriesState(filterCategories(selectCategory.categorieSelected))
+        }
+        else{
+            console.log(listCategories)
+           /*  setCategoriesState(listCategories) */
+            setListCategories(listCategories)
+           /*  setCategoriesState(listCategories) */
+        }
+    
+   },[selectCategory])
    
     return(
         <>
@@ -211,7 +232,7 @@ const ContainerInner = ()=>{
             goToCart={()=> goToCart()}
             />
 
-            {listCategories.length>0 ? 
+            { listCategories && listCategories.length>0 ? 
             <>
             {listCategories.map((el)=>{
                 return(<>
@@ -220,14 +241,14 @@ const ContainerInner = ()=>{
                 
                  <>
                 <TagCategory>
-                {el.title}
+                {el.name}
                 
                 </TagCategory>
                 <ContainerCards>
                    {filterProducts(el.id).map((el)=>{
                     return(
                     <>
-                    <CardComponent title={el.title} price={el.price} img={el.img} plus={()=>openModal(el)}/>
+                    <CardComponent title={el.name} price={el.preco} img={el.imagem} plus={()=>openModal(el)}/>
               
                         
                     </>

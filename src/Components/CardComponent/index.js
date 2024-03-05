@@ -8,7 +8,7 @@ const CardComponent = ({img,title,price,plus})=>{
         <>
         <CardContainer>
             <Container>
-                <CardPhoto src={img}></CardPhoto>
+                <CardPhoto src={`http://localhost:8000//${img}`}></CardPhoto>
                 <Title>{title}</Title>
                 <Price> R$ {parseFloat(price).toFixed(2)}</Price>
             </Container>

@@ -11,15 +11,16 @@ const LoaderApis = ()=>{
     const {cart, setCart} = useContext(CartContext)
     
     const getCategories=()=>{
-        api.get('/api/categorias').then((res)=>{
-            console.log(res)
-            setListCategories(res.data.response)
+       
+        api.get('categorias', { mode: 'no-cors'}).then((res)=>{
+            console.log(res.data)
+            setListCategories(res.data)
         })
       }
     const getProducts =()=>{
-        api.get('/api/produtos').then((res)=>{
-           console.log(res)
-           setListProducts(res.data.response)
+        api.get('/produtos',{ mode:'no-cors'}).then((res)=>{
+           console.log(res.data)
+           setListProducts(res.data)
         })
       }
     useEffect(()=>{

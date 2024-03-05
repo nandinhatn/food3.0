@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useContext} from "react";
 import Slider from "react-slick";
-import { ProductsContext, CategoriesContext, Cart } from "../../ContextProducts";
+import {
+     ProductsContext, 
+     CategoriesContext,
+    CartContext,
+    SelectCategoryContext
+    } from "../../ContextProducts";
 import { 
     Carousel,  
     ContainerSliderStyle, 
@@ -13,16 +18,39 @@ const SlideBar = (props)=>{
 
     const {listProducts, setListProducts} = useContext(ProductsContext)
     const {listCategories, setListCategories} = useContext(CategoriesContext)
+    const {selectCategory, setSelectCategory} = useContext(SelectCategoryContext)
 
     const [exib, setExib]= useState(false)
 
  
-    useEffect(()=>{
+    const getSelectCategory=(id)=>{
+        console.log('clickei', id)
+        let select = {search:true, categorySelected: id}
+        setSelectCategory(select)
+        console.log(selectCategory)
+    /*  if(id>0){
+        setSelectCategory({search: true, categorySelected: id} 
+        )
+       }
+       else{
+           setSelectCategory(
+            {search: false, categorySelected:0}
+           )
+       } 
+
+    } */
+}
+
+   useEffect(()=>{
         console.log('exib categorie', listCategories)
         if(listCategories && listCategories.length>0){
             setExib(true)
         }
-    },[listCategories])
+    },[listCategories]) 
+
+    useEffect(()=> {
+        console.log(listCategories)
+    },[])
    
   
     const settings = {
@@ -46,13 +74,13 @@ const SlideBar = (props)=>{
  
   {listCategories.map(element => 
          <div>
-         <H3>{element.title}</H3>
+         <H3 onClick={()=> getSelectCategory(element.id)}>{element.name}</H3>
        </div>
     )} 
     </Carousel>
   
     </ContainerSliderStyle> 
-         : 'nao pode exibir'}
+         : 'nao pode exibir'} 
         
         </>
     )

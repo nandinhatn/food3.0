@@ -27,6 +27,7 @@ const Cart = ()=>{
         const {frete, setFrete} = useContext(FreteContext)
         const {listProducts, setListProducts} = useContext(ProductsContext)
         const {listCategories, setListCategories} = useContext(CategoriesContext)
+        const [total, setTotal] = useState()
         const [confirm, setConfirm] = useState(false)
         const [cartOk, setCartOk] = useState(false)
         let count=1;
@@ -42,9 +43,12 @@ const Cart = ()=>{
                     return c + (parseInt(v.qtd * parseFloat(v.price)))
             },0)
 
+           
+          
             return  (sum + frete).toFixed(2)
 
         }
+        
 
         const checkPriceProducts=(id)=>{
             let product = listProducts.filter((el)=> el.id==id)
@@ -110,6 +114,11 @@ const Cart = ()=>{
             
 
         },[])
+
+        const confirmCart=()=>{
+            setTotal(calcTotal())
+            setConfirm(true)
+        }
     return(
         <>
         
@@ -188,7 +197,7 @@ const Cart = ()=>{
                 </ItensCart>
                 {cartOk ? <>
                     
-                    {!confirm?  <Button onClick={()=> setConfirm(true)}>Prosseguir para informações de endereço</Button> : ''}
+                    {!confirm?  <Button onClick={()=> confirmCart()}>Prosseguir para informações de endereço</Button> : ''}
                    
 
                 </> : 
@@ -203,10 +212,12 @@ const Cart = ()=>{
             {confirm? 
             <>
             
-              <Maps confirm={()=> setConfirm(false)}/>
+              <Maps total={total} confirm={()=> setConfirm(false)}/>
             </> : ''}
-
+           
+      
         </ContainerCart>
+       
         </>
     )
 }

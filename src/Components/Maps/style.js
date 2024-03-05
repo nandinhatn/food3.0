@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const Container = styled.div`
 display: flex;
 justify-content: center;
+flex-direction: column;
 align-items: start;
 font-size: 14px;
 
@@ -31,7 +32,7 @@ font-family: ${(prop)=> prop.theme.fonts.regular};
 color: ${(prop)=> prop.theme.colors.secondary};
 margin-top: 20px;
 outline: 0;
-width: 40%;
+width: 90%;
 
 
 font-size: 12px;

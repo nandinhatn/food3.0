@@ -22,11 +22,11 @@ import axios from 'axios';
 
 import { withMask } from 'use-mask-input';
 import apiKey from '../../assets/Dates/keys';
+import MethodsPayment from '../MethodsPayment';
 
 
 
-
-const Maps = ({confirm})=>{
+const Maps = ({confirm, total})=>{
 
     const [distance, setDistance] = useState([])
  
@@ -36,8 +36,11 @@ const Maps = ({confirm})=>{
     const [neighborhood, setNeighborhood] = useState()
     const [city, setCity] = useState()
     const [uf, setUF] = useState() 
-    const [complement, setComplement] = useState()
+    const [complement, setComplement] = useState("-")
     const [number, setNumber] = useState('')
+    const [name, setName] = useState('')
+    const [cpf, setCpf] = useState('')
+    const [celular, setCelular] = useState('')
     const [confirmAddres, setConfirmAddress] = useState(false)
  
    
@@ -143,7 +146,7 @@ const Maps = ({confirm})=>{
 
             
 
-            {confirmAddres? 
+           {/*  {confirmAddres?  */}
 
             <>
             <div>Informe o numero</div>
@@ -151,21 +154,30 @@ const Maps = ({confirm})=>{
             <Input value={number} onChange={(e)=> setNumber(e.target.value)}></Input>
             <div>Informe o Complemento</div>
             <Input value={complement} onChange={(e)=> setComplement(e.target.value)}></Input>
-            {confirmAddres && number !='' ? 
+          {/*   {confirmAddres && number !='' ?  */}
             <>
             <Title>Endereço de Entrega</Title>
             <Container>
 
             <div>{address}</div>
             </Container>
-            <div>Forma de Pagamento</div>
-            <div> aqui entra as informaçãoes de pagamento</div>
+            <Title>Informações Pessoais</Title>
+            <div>Informe seu nome</div>
+            <Input value={name} onChange={(e)=> setName(e.target.value)}></Input>
+            <div>Informe CPF</div>
+            <Input value={cpf} onChange={(e)=> setCpf(e.target.value)}></Input>
+            <div>Informe Celular</div>
+            <Input value={celular} onChange={(e)=> setCelular(e.target.value)}></Input>
+         
+         
+            <MethodsPayment address={address} cpf={cpf} name={name} number={number} celular={celular} complement={complement} uf={uf} ></MethodsPayment>
+          
             </>
-             :''}
+           {/*   :''} */}
             
 
             </>
-            : ''}
+          {/*   : ''} */}
         </>
     )
 }

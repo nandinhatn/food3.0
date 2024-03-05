@@ -6,7 +6,7 @@ justify-content: center;
 align-items: center;
 padding: 30px;
 flex-direction: column;
-height: 100%;
+
 
 `;
 
@@ -16,7 +16,9 @@ display: grid;
 grid-template-columns: 1fr 1fr 4fr 2fr 2fr 2fr;
 justify-content: space-evenly;
 align-items: start;
+align-items: center;
 text-align: left;
+
 
 border-bottom: 1px solid #CCC;
 width: 100%;
@@ -27,6 +29,7 @@ cursor: pointer;
 :hover{
     background-color: ${(prop)=> prop.theme.colors.primary};
     color: white;
+    
 }
 `;
 
@@ -36,6 +39,7 @@ text-align: left;
 grid-template-columns: 1fr 1fr 4fr 2fr 2fr 2fr;
 justify-content: space-evenly;
 align-items: start;
+
 font-size: 12px;
 
 font-weight: bold;

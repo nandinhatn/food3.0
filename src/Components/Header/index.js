@@ -1,6 +1,12 @@
 import react,{useState, useContext, useEffect} from 'react';
 import Logo from '../../assets/logo_pizza.jpg'
-import {CartContext,ProductsContext,CategoriesContext} from '../../ContextProducts.js'
+import {
+    CartContext,
+    ProductsContext,
+    CategoriesContext,
+    SelectCategoryContext,
+
+} from '../../ContextProducts.js'
 import {FaCartPlus} from 'react-icons/fa'
 import { NavLink, useLocation, redirect, useNavigate } from 'react-router-dom';
 import {
@@ -14,6 +20,7 @@ import SlideBar from '../SlickBar/index.js';
 const Header = ()=>{
     const {listProducts,setListProducts} = useContext(ProductsContext);
     const {listCategories, setListCategories} = useContext(CategoriesContext)
+    const {selectCategory, setSelectCategory} = useContext(SelectCategoryContext)
     const {cart, setCart} = useContext(CartContext)
     const [countItem, setCountItem] = useState(0)
     const navigate = useNavigate()
