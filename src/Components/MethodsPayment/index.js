@@ -92,9 +92,7 @@ const MethodsPayment =(props)=>{
         <Radios name="payment" type="radio" value="card"/> 
         <Label>Pagamento Cartão
             </Label>
-        <Radios name="payment" type="radio" value="pix"/> 
-        <Label>Pagamento Pix
-            </Label>
+       
         </ContainerRadios>
         
       
@@ -112,7 +110,16 @@ const MethodsPayment =(props)=>{
         <PaymentsPix></PaymentsPix>
         :  card? 
         
-      <PaymentsCards></PaymentsCards>
+      <PaymentsCards 
+      name={props.name} 
+      address={props.address} 
+      cpf={props.cpf} 
+      number={props.number} 
+      celular={props.celular} 
+      number={props.number}
+      complement={props.complement}
+      uf={props.uf}
+      ></PaymentsCards>
         : 'Aguardando definição de pagamento' }
         </Container>
         </>

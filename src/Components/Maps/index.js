@@ -20,8 +20,10 @@ import Geocode from "react-geocode";
 import infos from '../../assets/Dates/infos';
 import axios from 'axios';
 
+
 import { withMask } from 'use-mask-input';
 import apiKey from '../../assets/Dates/keys';
+import api from '../../assets/Dates/api'
 import MethodsPayment from '../MethodsPayment';
 
 
@@ -42,6 +44,7 @@ const Maps = ({confirm, total})=>{
     const [cpf, setCpf] = useState('')
     const [celular, setCelular] = useState('')
     const [confirmAddres, setConfirmAddress] = useState(false)
+    const [faixasFrete, setFaixasFrete] = useState([])
  
    
     const {frete,setFrete} = useContext(FreteContext)
@@ -92,6 +95,33 @@ const Maps = ({confirm, total})=>{
 
         
     }
+    function getFaixas (distance){
+        console.log(distance)
+        if(faixasFrete){
+            console.log('exite')
+            let result =faixasFrete.filter((el)=> el.distance <= Math.round(distance))
+            console.log(result)
+            if(result.length>0){
+                let resultado = result.sort().reverse()[0]
+                console.log(typeof resultado)
+
+                return result.sort().reverse()[0]
+            }
+            else{
+                return false
+            }
+           
+
+        }
+       
+      
+
+       
+                     
+                  
+ 
+    }
+
     function getDistanceBettwenn(lat,long){
         console.log(lat,long)
         const distance = getDistance(
@@ -106,14 +136,41 @@ const Maps = ({confirm, total})=>{
             console.log('atendimento é feito')
             console.log(infos.faixas)
             const filter = infos.faixas.filter((el)=> el.distance <= distanceKm)
-            console.log('infos',filter[0])
-            setFrete(filter[0].value)
+            // calcular do path criado das faixas.
+             let freteFinal= getFaixas(distanceKm)
+             console.log(freteFinal)
+
+             if(freteFinal){
+                setFrete(freteFinal)
+             }
+             else{
+                console.log('nao permitido')
+             }
+            //  console.log(freteFinal)
+            // limite  fazer com o path criado do restaurante.
+            // console.log('infos',filter[0])
+            // setFrete(filter[0].value)
             setConfirmAddress(true)
         }
         else{
             console.log('não permitido')
         }
     }
+
+    useEffect(()=>{
+        api.get('/faixas').then((res)=> {
+        
+            console.log(res.data)
+         
+            setFaixasFrete(res.data)
+        }
+           
+           )
+    },[])
+
+    useEffect(()=>{
+        console.log(faixasFrete)
+    },[faixasFrete])
 
 
 
@@ -170,7 +227,7 @@ const Maps = ({confirm, total})=>{
             <Input value={celular} onChange={(e)=> setCelular(e.target.value)}></Input>
          
          
-            <MethodsPayment address={address} cpf={cpf} name={name} number={number} celular={celular} complement={complement} uf={uf} ></MethodsPayment>
+            <MethodsPayment cart={cart} address={address} cpf={cpf} name={name} number={number} celular={celular} complement={complement} uf={uf} ></MethodsPayment>
           
             </>
            {/*   :''} */}

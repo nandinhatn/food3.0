@@ -70,8 +70,8 @@ const ModalWindow = ({
        <>
           <ContainerModal>
             <Title>{contentModal.title}</Title>
-            <Image src={contentModal.img}/>
-            {contentModal.allowSelf? 
+            <Image src={`http://localhost:8000${contentModal.imagem}`}/>
+            {contentModal.meiaPorcao? 
 
             <>
            
@@ -100,7 +100,7 @@ const ModalWindow = ({
            
             <ContainerDetails>
                 <ContainerDetailsText>Detalhes</ContainerDetailsText>
-                <div>{contentModal.details}</div>
+                <div>{contentModal.descricao}</div>
             </ContainerDetails>
             <ButtonCheckout disabled={checkButtonAdd()}  onClick={addCart} >Colocar no Carrinho</ButtonCheckout>
         </ContainerModal>

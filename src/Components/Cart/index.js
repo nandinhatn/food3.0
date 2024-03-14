@@ -37,15 +37,16 @@ const Cart = ()=>{
 
         }
         const calcTotal= ()=>{
-            
+            console.log(cart)
             let sum = cart.reduce((c, v)=>{
-                    console.log(c,parseFloat(v.price))
-                    return c + (parseInt(v.qtd * parseFloat(v.price)))
+                    console.log(c,parseFloat(v.preco))
+                    return c + (parseInt(v.qtd * parseFloat(v.preco)))
             },0)
-
-           
-          
-            return  (sum + frete).toFixed(2)
+            
+           console.log(sum)
+           let total ;
+             frete.value ? total=(sum + parseFloat(frete.value)).toFixed(2): total= sum.toFixed(2)
+          return 'R$' +  total
 
         }
         
@@ -111,6 +112,7 @@ const Cart = ()=>{
 
         useEffect(()=>{
             checkItensOnlySelf()
+            setFrete({value: 0.00})
             
 
         },[])
@@ -144,9 +146,9 @@ const Cart = ()=>{
                 <ItensCart>
                     <div>{count++}</div>
                     <div> {item.self==true? '1/2' : item.qtd}</div>
-                    <div>{item.title}</div>
-                    <div>R$ {parseFloat(item.price).toFixed(2)}</div>
-                    <div>R$ {priceTotal(item.qtd, item.price, item).toFixed(2)}</div>
+                    <div>{item.name}</div>
+                    <div>R$ {parseFloat(item.preco).toFixed(2)}</div>
+                    <div>R$ {priceTotal(item.qtd, item.preco, item).toFixed(2)}</div>
                     <div onClick={()=> deleteProduct(item.id)}><FaTrash size={15} color="red"/></div>
                     
 
@@ -173,10 +175,11 @@ const Cart = ()=>{
                     <div></div>
                     <div>Frete</div>
                     <div></div>
-                    <div> {frete.toFixed(2)!='NaN' || frete.toFixed(2)> 0 ? 
+                    {}
+                    <div> {parseFloat(frete.value).toFixed(2)!='NaN' || parseFloat(frete.value).toFixed(2)> 0 ? 
                     <>
                     R$
-                    {frete.toFixed(2)}
+                    {parseFloat(frete.value).toFixed(2)}
                     </>
                     :''}</div>
                 </ItensCart>
@@ -186,15 +189,17 @@ const Cart = ()=>{
                 <ItensCart>
                     <div></div>
                     <div></div>
-                    <div>{frete? 'Valor  Total': ''}</div>
+                    <div>{frete.value===0.0 ? 'Valor  Total': ''}</div>
                     <div></div>
-                    <div> {calcTotal()!='NaN'? 
+                    {/* <div> {calcTotal()!='NaN'? 
                     <>
                     R$
                     {calcTotal()}
                     </>
-                    :''}</div>
+                    :''}</div> */}
+                    <div>  {calcTotal()}</div>
                 </ItensCart>
+                <div>{frete.value==0.0?'Frete a calcular':''}</div>
                 {cartOk ? <>
                     
                     {!confirm?  <Button onClick={()=> confirmCart()}>Prosseguir para informações de endereço</Button> : ''}
