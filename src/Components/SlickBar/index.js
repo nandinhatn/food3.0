@@ -6,7 +6,8 @@ import {
      ProductsContext, 
      CategoriesContext,
     CartContext,
-    SelectCategoryContext
+    SelectCategoryContext,
+
     } from "../../ContextProducts";
 import { 
     Carousel,  
@@ -22,17 +23,34 @@ const SlideBar = (props)=>{
     const {listProducts, setListProducts} = useContext(ProductsContext)
     const {listCategories, setListCategories} = useContext(CategoriesContext)
     const {selectCategory, setSelectCategory} = useContext(SelectCategoryContext)
+    const [listCategoriesState, setCategoriesState] = useState([])
     const handleDragStart = (e) => e.preventDefault();
     const [exib, setExib]= useState(false)
 
  
     const getSelectCategory=(id)=>{
-        console.log('clickei', id)
-        let select = { search: true, categorySelected: id };
+
+        if(id==0){
+            console.log('idd 0')
+            let select = {search:false, categorySelected:0};
+            setSelectCategory({...select})
+            console.log(selectCategory)
+            console.log(listCategories)
+            setCategoriesState(listCategories)
+
+        }
+        else{
+           
+            console.log('clickei', id)
+            let select = { search: true, categorySelected: id };
+            
+            // setSelectCategory(select)
+            setSelectCategory({...select})
+    
+            console.log(selectCategory)
+          
+        }
         
-        // setSelectCategory(select)
-        setSelectCategory({select})
-        console.log(selectCategory)
     /*  if(id>0){
         setSelectCategory({search: true, categorySelected: id} 
         )
@@ -77,7 +95,7 @@ const SlideBar = (props)=>{
     
     <Carousel  {...settings}>
     
- 
+            <div><H3 onClick={()=> getSelectCategory(0) }>Todos </H3></div>
   {listCategories.map(element => 
          <div>
          <H3 onClick={()=> getSelectCategory(element.id)}>{element.name}</H3>

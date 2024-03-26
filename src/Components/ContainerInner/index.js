@@ -16,6 +16,7 @@ import {
 import api from "../../assets/Dates/api";
 import CardComponent from "../CardComponent";
 import moment from "moment";
+import { mdiColorHelper } from "@mdi/js";
 
 
 
@@ -25,12 +26,14 @@ const ContainerInner = ()=>{
     const {listCategories, setListCategories} = useContext(CategoriesContext)
     const {cart, setCart} = useContext(CartContext)
     const {selectCategory, setSelectCategory} = useContext(SelectCategoryContext)
-    const {listCategoriesState, setCategoriesState} = useState()
+    const [listCategoriesState, setCategoriesState] = useState([])
     const [modalIsOpen, setIsOpen] = useState(false)
     const [modalContent, setModalContent] = useState([])
+    const [exibAll, setExibAll] = useState(true)
     const [productSelf, setProductSelf] = useState(false)
     const [productQtd, setProductQtd] = useState(0)
     const [modalAction, setModalAction] = useState(0)
+    const [pares, setPares]= useState([])
     const navigate = useNavigate()
 
 //ModalAction
@@ -38,10 +41,20 @@ const ContainerInner = ()=>{
 //1- after add cart
    
     const filterProducts = (category)=>{
-        let productsFilter = listProducts.filter((el)=> el.categoria===category)
+        let productsFilter = listProducts.filter((el)=> el.categoria===category && el.disponivel===true)
+      
+       
+        
+
+       
       
         return productsFilter
     }
+
+    useEffect(()=>{
+        
+
+    },[listCategories])
 
     const onClickPlus = ()=>{
         setProductQtd(productQtd + 1)
@@ -57,7 +70,7 @@ const ContainerInner = ()=>{
 
 
     const addCart=(itemCart)=>{
-       
+      
         const item ={ 
             ...itemCart, 
             qtd: productQtd, 
@@ -68,6 +81,7 @@ const ContainerInner = ()=>{
         
         const id = item.id
         const hasItemCart= cart.filter((item)=> item.id===id)
+        
         const hasNotItemCart= cart.filter((item)=> item.id !==id)
         const cartLength = cart.length
         const thereAreItens = cartLength>0? true : false
@@ -79,32 +93,46 @@ const ContainerInner = ()=>{
         if(item.self){
 
             if(cart.length<=0){
-                item.title = item.title + ' 1/2 pizza'
+                item.title = item.title + ' 1/2 porção'
                 item.qtd =1
             }
             else{
-                const filter = cart.filter((el)=> el.self===true && el.marker==false)
+                
+                const categoriaHas = cart.filter((el)=> el.categoria == item.categoria)
+                console.log('categoria',categoriaHas)
+                
+                if(categoriaHas.length>0){
+                    const filter = cart.filter((el)=> el.self===true && el.marker==false)
 
-                if(item.self===true && filter.length===1){
-                    let valorMax = Math.max(parseInt(item.price), parseInt(filter[0].price))
+                
+
+                if(item.self===true && filter.length>=1){
+                    let valorMax = Math.max(parseInt(item.preco), parseInt(filter[0].preco))
                     console.log(valorMax)
+                    console.log('aqui111111')
                     item.marker =true;
                     filter[0].marker= true;
 
                     
-                    filter[0].price= valorMax/2
+                    filter[0].preco= valorMax/2
                     item.qtd=1
                     filter[0].qtd=1
-                    item.price = valorMax/2
+                    item.preco = valorMax/2
                     item.title = item.title + ' 1/2 pizza'
+                    setPares([ [item.id, filter[0].id]])
+                   
                     setCart([item, filter[0]])
-                    return
+                  
+                  
 
                 }
                 else{
                     item.title = item.title +' 1/2 pizza'
                     item.qtd=1
                 }
+                }
+
+               
             }
 
         }
@@ -181,8 +209,11 @@ const ContainerInner = ()=>{
     
  
    const markProductsSelf=()=>{
-    setProductSelf(!productSelf)
-    console.log('ativer', productSelf)
+    console.log(productSelf)
+    let result = productSelf==false ? true : false 
+    console.log(result)
+    setProductSelf(result)
+    console.log('ativer', result)
     if(productSelf){
         setProductQtd(0)
     }
@@ -196,22 +227,31 @@ const ContainerInner = ()=>{
 
    const filterCategories =(id)=>{
       let result = listCategories.filter((el)=> el.id==id)
+      console.log('dentro do filter', result)
+      setCategoriesState(result)
       return result
    }
-  
+   useEffect(()=>{
+      setCategoriesState(listCategories)
+   },[listCategories])
 
   useEffect(()=>{
-        if(selectCategory.search===true){
-            setCategoriesState(filterCategories(selectCategory.categorieSelected))
-        }
-        else{
-            console.log(listCategories)
-           /*  setCategoriesState(listCategories) */
-            setListCategories(listCategories)
-           /*  setCategoriesState(listCategories) */
-        }
+    console.log(selectCategory)
+    if(selectCategory.search==true){
+      console.log('selectionei')
+      filterCategories(selectCategory.categorySelected)
+      
+    }
     
-   },[selectCategory])
+    else{
+       console.log('não tem selecionado')
+       setCategoriesState(listCategories)
+     
+       
+    }
+    
+
+  },[selectCategory])
    
     return(
         <>
@@ -232,12 +272,12 @@ const ContainerInner = ()=>{
             goToCart={()=> goToCart()}
             />
 
-            { listCategories && listCategories.length>0 ? 
+            {listCategoriesState.length>0  ? 
             <>
-            {listCategories.map((el)=>{
+            {listCategoriesState.map((el)=>{
                 return(<>
 
-                {filterProducts(el.id).length>0? 
+                {filterProducts(el.id).length>0 ? 
                 
                  <>
                 <TagCategory>
@@ -245,7 +285,8 @@ const ContainerInner = ()=>{
                 
                 </TagCategory>
                 <ContainerCards>
-                   {filterProducts(el.id).map((el)=>{
+                 
+                   {  filterProducts(el.id).map((el)=>{
                     return(
                     <>
                     <CardComponent title={el.name} price={el.preco} img={el.imagem} plus={()=>openModal(el)}/>
@@ -255,9 +296,10 @@ const ContainerInner = ()=>{
                     )
                    })} 
                 </ContainerCards>
+              
                 </> 
                 
-                : ''}
+                :  <>  </>}
                
             
                 </>)
@@ -265,8 +307,10 @@ const ContainerInner = ()=>{
             
             </>
             
-            : ''}
-
+            :  <></>
+            
+            }
+          
         </Container>
         </>
     )

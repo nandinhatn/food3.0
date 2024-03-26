@@ -45,7 +45,7 @@ const Cart = ()=>{
             
            console.log(sum)
            let total ;
-             frete.value ? total=(sum + parseFloat(frete.value)).toFixed(2): total= sum.toFixed(2)
+           frete && frete.value ? total=(sum + parseFloat(frete.value)).toFixed(2): total= sum.toFixed(2)
           return 'R$' +  total
 
         }
@@ -189,7 +189,7 @@ const Cart = ()=>{
                 <ItensCart>
                     <div></div>
                     <div></div>
-                    <div>{frete.value===0.0 ? 'Valor  Total': ''}</div>
+                    <div>{frete && frete.value===0.0 ? 'Valor  Total': ''}</div>
                     <div></div>
                     {/* <div> {calcTotal()!='NaN'? 
                     <>

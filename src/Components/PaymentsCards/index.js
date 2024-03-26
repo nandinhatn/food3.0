@@ -9,6 +9,7 @@ import {
   FreteContext
 } from '../../ContextProducts'
 import axios from 'axios';
+import baseURL from '../../assets/Dates/urls';
 const PaymmentsCards = (props)=>{
 
     const [showQrcode, setShowQrcode] = useState(false);
@@ -34,7 +35,7 @@ const PaymmentsCards = (props)=>{
       const getProductsCart=()=>{
         let listProducts =[]
         cart.forEach(element => {
-          listProducts.push({ "id": element.id, "quantidade": element.qtd})
+          listProducts.push({ "id": element.id, "quantidade": element.qtd, "self": element.self})
           
         });
         console.log(listProducts)
@@ -72,16 +73,18 @@ const PaymmentsCards = (props)=>{
         getFrete()
         console.log(props)
         let complement = "" || props.complement
+        let frete_id = 1 || frete.id
+        console.log(frete_id)
         getProductsCart()
        
-       axios.post('http://localhost:8000/novo_pedido/',
+       axios.post(`${baseURL}/novo_pedido/`,
         {
           "name_client": props.name,
           "address_client": props.address +  "Numero da casa: " + props.number + complement ,
           "cpf_client": props.cpf,
           "observacoes": "Observações adicionais sobre o pedido",
           "forma_pagamento":param.formData.payment_method_id,
-          "faixa":1,
+          "faixa": frete_id,
           "email_client": param.formData.payer.email,
           "produtos": getProductsCart()
         

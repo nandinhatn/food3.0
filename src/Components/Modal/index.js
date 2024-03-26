@@ -81,7 +81,7 @@ const ModalWindow = ({
 
             </OptionSelfText>
             <ContainerInput>
-                <Input value={productSelf} defaultChecked={productSelf} type="checkbox" onChange={markProductsSelf}/> Meia Pizza
+                <Input value={productSelf} defaultChecked={productSelf} type="checkbox" onChange={markProductsSelf}/> Meia Porção
             </ContainerInput>
             </>
            
